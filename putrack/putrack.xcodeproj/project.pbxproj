@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		E44D739E2DD5AC580073E729 /* putrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = putrack.app; path = "/Users/sinjiwon/Desktop/smartJiwon/PUT/iOS/putrack/build/Debug-iphoneos/putrack.app"; sourceTree = "<absolute>"; };
+		E44D73D12DD5AE200073E729 /* putrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = putrack.app; path = "/Users/sinjiwon/Desktop/smartJiwon/PUT/iOS/putrack/build/Debug-iphoneos/putrack.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E44D73D32DD5AE200073E729 /* Exceptions for "putrack" folder in "putrack" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E44D739D2DD5AC580073E729 /* putrack */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E44D73A02DD5AC580073E729 /* putrack */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E44D73D32DD5AE200073E729 /* Exceptions for "putrack" folder in "putrack" target */,
+			);
 			path = putrack;
 			sourceTree = "<group>";
 		};
@@ -58,7 +71,7 @@
 			packageProductDependencies = (
 			);
 			productName = putrack;
-			productReference = E44D739E2DD5AC580073E729 /* putrack.app */;
+			productReference = E44D73D12DD5AE200073E729 /* putrack.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -246,7 +259,7 @@
 				DEVELOPMENT_TEAM = L4327HMP3S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_FILE = putrack/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -281,7 +294,7 @@
 				DEVELOPMENT_TEAM = L4327HMP3S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_FILE = putrack/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
