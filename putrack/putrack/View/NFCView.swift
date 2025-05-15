@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct NFCView: View {
+    @StateObject private var viewModel = NFCViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 20) {
+            Button("Scan NFC Tag") {
+                viewModel.startScanning()
+            }
+            .font(.headline)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .clipShape(Capsule())
+
+            Text(viewModel.lastScannedText)
+                .padding()
+                .multilineTextAlignment(.center)
         }
-        .padding()
+        .navigationTitle("NFC Scan")
     }
 }
 

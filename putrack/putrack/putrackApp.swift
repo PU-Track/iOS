@@ -11,7 +11,10 @@ import SwiftUI
 struct putrackApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                HomeView().tabItem { Label("Home", systemImage: "house") }
+                NFCView().tabItem { Label("NFC", systemImage: "wave.3.right") }
+            }
         }
     }
 }
