@@ -41,7 +41,7 @@ struct HomeView: View {
                     .padding(.horizontal)
                 
                 List(viewModel.patients, id: \.patient.id) { viewModel in
-                    NavigationLink(destination: PatientView(viewModel: viewModel)) {
+                    NavigationLink(destination: PatientView(patientViewModel: viewModel)) {
                         PatientCellView(viewModel: viewModel)
                     }
                 }

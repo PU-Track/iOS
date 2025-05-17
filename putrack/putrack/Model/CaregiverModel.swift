@@ -5,8 +5,6 @@
 //  Created by 신지원 on 5/17/25.
 //
 
-import Foundation
-
 struct Caregiver: Identifiable {
     let id: Int
     let name: String

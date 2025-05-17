@@ -13,15 +13,13 @@ struct putrackApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            if appState.isLoggedIn {
-//                PutrackTabView()
-//                    .environmentObject(appState)
-//            } else {
-//                LoginView()
-//                    .environmentObject(appState)
-//            }
-            
-            PutrackTabView()
+            if appState.isLoggedIn {
+                HomeView()
+                    .environmentObject(appState)
+            } else {
+                LoginView()
+                    .environmentObject(appState)
+            }
         }
     }
 }

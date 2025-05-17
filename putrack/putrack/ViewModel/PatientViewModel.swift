@@ -31,10 +31,7 @@ final class PatientViewModel: ObservableObject {
         let now = Date()
         let elapsed = now.timeIntervalSince(patient.lastPositionChangeTime)
         let remaining = patient.nextPositionChangeTime.timeIntervalSince(now)
-        
-        print("[⏱] elapsed: \(elapsed)")
-        print("[🕒] remaining: \(remaining)")
-        
+
         elapsedSinceLastChange = max(0, elapsed)
         currentRemainingTime = remaining
     }
@@ -48,11 +45,9 @@ final class PatientViewModel: ObservableObject {
     }
     
     // MARK: 타이머 데이터 처리
-    
     var formattedElapsedTime: String {
         let hours = Int(elapsedSinceLastChange) / 3600
         let minutes = (Int(elapsedSinceLastChange) % 3600) / 60
-        let seconds = Int(elapsedSinceLastChange) % 60
         return String(format: "%02d시간 %02d분", hours, minutes)
     }
     
