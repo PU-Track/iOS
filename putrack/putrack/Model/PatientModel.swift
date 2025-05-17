@@ -16,7 +16,7 @@ struct Patient: Identifiable {
     let weight: Float
     let status: PatientStatus
     let lastPositionChangeTime: Date
-    let remainingTimeToNextChange: TimeInterval
+    let nextPositionChangeTime: Date
 }
 
 enum PatientStatus {

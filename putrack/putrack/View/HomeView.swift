@@ -40,30 +40,11 @@ struct HomeView: View {
                     .font(.headline)
                     .padding(.horizontal)
                 
-                List(viewModel.patients) { patient in
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Text(patient.name)
-                                .font(.headline)
-                            Spacer()
-                            Text("\(patient.age)세")
-                                .foregroundColor(.gray)
-                        }
-                        
-                        Text("상태: \(viewModel.statusText(for: patient.status))")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        
-                        Text("마지막 체위변경: \(viewModel.formattedDate(patient.lastPositionChangeTime))")
-                            .font(.caption)
-                        
-                        Text("남은 시간: \(viewModel.formattedRemainingTime(patient.remainingTimeToNextChange).0)")
-                            .font(.caption)
-                            .foregroundColor(viewModel.formattedRemainingTime(patient.remainingTimeToNextChange).1)
+                List(viewModel.patients, id: \.patient.id) { viewModel in
+                    NavigationLink(destination: PatientView(viewModel: viewModel)) {
+                        PatientCellView(viewModel: viewModel)
                     }
-                    .padding(.vertical, 4)
                 }
-                .listStyle(.insetGrouped)
             }
         }
     }
