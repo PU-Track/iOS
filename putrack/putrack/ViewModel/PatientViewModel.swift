@@ -60,17 +60,19 @@ final class PatientViewModel: ObservableObject {
     
     var formattedRemainingTime: String {
         let isOverdue = currentRemainingTime < 0
-        let minutes = abs(Int(currentRemainingTime)) / 60
+        let hours = abs(Int(currentRemainingTime)) / 3600
+        let minutes = abs(Int(currentRemainingTime) % 3600) / 60
         let prefix = isOverdue ? "+" : ""
-        return String(format: "%@%02d분", prefix, minutes)
+        return String(format: "%@%02d시간 %02d분", prefix, hours, minutes)
     }
 
     var formattedRemainingTimeWithSecond: String {
         let isOverdue = currentRemainingTime < 0
-        let minutes = abs(Int(currentRemainingTime)) / 60
+        let hours = abs(Int(currentRemainingTime)) / 3600
+        let minutes = abs(Int(currentRemainingTime) % 3600) / 60
         let seconds = abs(Int(currentRemainingTime)) % 60
         let prefix = isOverdue ? "+" : ""
-        return String(format: "%@%02d분 %02d초", prefix, minutes, seconds)
+        return String(format: "%@%02d시간 %02d분 %02d초", prefix, hours, minutes, seconds)
     }
     
     var formattedLastChangeTime: String {
