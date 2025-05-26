@@ -10,4 +10,4 @@ xcuserdata/
 
 .build/
 GoogleService-Info.plist
-Config
+Config.xcconfig
