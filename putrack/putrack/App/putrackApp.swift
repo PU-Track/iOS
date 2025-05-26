@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct putrackApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var appState = AppState()
     
     var body: some Scene {
