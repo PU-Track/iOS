@@ -9,12 +9,16 @@ import SwiftUI
 
 struct LoginView: View {
     
+    //MARK: Property
+    
     @EnvironmentObject var appState: AppState
     @Environment(\.openURL) var openURL
     
     @State private var userCode: String = ""
     @State private var errorMessage: String?
     @FocusState private var isFocused: Bool
+    
+    //MARK: UI
     
     var body: some View {
         VStack(spacing: 20) {
@@ -26,6 +30,7 @@ struct LoginView: View {
                 // 기본 텍스트필드 설정
                 TextField("", text: $userCode)
                     .onChange(of: userCode) { newValue in
+                        // 4글자까지만 작성가능하도록 수정
                         let filtered = newValue.uppercased().filter { $0.isLetter && $0.isASCII }
                         userCode = String(filtered.prefix(4))
                     }
@@ -56,12 +61,14 @@ struct LoginView: View {
                 }
             }
             
+            // 에러메세지 발생할 때만 나타남
             if let error = errorMessage {
                 Text(error)
                     .foregroundColor(.red)
                     .font(.caption)
             }
             
+            // 로그인 버튼
             Button("로그인") {
                 login()
             }
@@ -71,6 +78,8 @@ struct LoginView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
             
+            // 등록 페이지로 이동하는 버튼
+            //TODO: 웹사이트로 연결
             Button(action: {
                 openURL(URL(string: "https://open.kakao.com/o/sNzYAPwh")!)
             }) {
