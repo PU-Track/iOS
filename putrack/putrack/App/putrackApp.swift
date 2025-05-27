@@ -15,7 +15,7 @@ struct putrackApp: App {
     var body: some Scene {
         WindowGroup {
             if appState.isLoggedIn {
-                HomeView()
+                HomeView(userCode: appState.userCode ?? "")
                     .environmentObject(appState)
             } else {
                 LoginView()

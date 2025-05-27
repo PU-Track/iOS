@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct FCMTokenRequest: Encodable {
-    let uuid: String
-    let fcmToken: String
+struct FCMTokenRequest: Codable {
+    let pushToken: String
     
     enum CodingKeys: String, CodingKey {
-        case uuid
-        case fcmToken = "fcm_token"
+        case pushToken = "pushToken"
     }
 }

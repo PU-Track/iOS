@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       
       FCMManager.shared.configure(application: application)
-      
+      print("FCM 설정 완료\n")
     return true
   }
 }

@@ -10,8 +10,26 @@ import SwiftUI
 final class HomeViewModel: ObservableObject {
     @Published var caregiver: Caregiver
     @Published var patients: [PatientViewModel] = []
+    var userCode: String
     
-    init() {
+    private let testService = TestService()
+    
+    init(userCode: String) {
+        // 초기 데이터 세팅
+        
+        self.userCode = userCode
+        let result = Self.loadMockData()
+        self.caregiver = result.caregiver
+        self.patients = result.patients
+        
+        // 비동기 POST 요청
+        Task {
+            await postTestData()
+        }
+    }
+    
+    // 데이터 로드
+    static func loadMockData() -> (caregiver: Caregiver, patients: [PatientViewModel]) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
@@ -74,9 +92,7 @@ final class HomeViewModel: ObservableObject {
             )
         ]
         
-        self.patients = rawPatients.map { PatientViewModel(patient: $0) }
-        
-        self.caregiver = Caregiver(
+        let caregiver = Caregiver(
             id: 0,
             name: "신지원",
             gender: .female,
@@ -85,6 +101,9 @@ final class HomeViewModel: ObservableObject {
             assignedPatients: rawPatients,
             status: .working
         )
+        
+        let patientVMs = rawPatients.map { PatientViewModel(patient: $0) }
+        return (caregiver: caregiver, patients: patientVMs)
     }
     
     var roleText: String {
@@ -110,6 +129,14 @@ final class HomeViewModel: ObservableObject {
         case .working: return .green
         case .resting: return .orange
         case .offToday: return .red
+        }
+    }
+    
+    private func postTestData() async {
+        do {
+            try await testService.postRegisterDeviceToken(code: userCode, testData: TestRequest(title: "나다", body: "반갑다"))
+        } catch {
+            print("\(error.localizedDescription)")
         }
     }
 }
