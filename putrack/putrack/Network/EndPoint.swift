@@ -8,10 +8,22 @@
 import Foundation
 
 enum EndPoint {
-    
-    //test API
-    static let testFCMSend = "fcm/send"
-    
-    static let userPatientRegister = "user/patient/register"
     static let userCaregiverRegisterToken = "user/caregiver/register/token"
+    static let userCaregiver = "user/caregiver"
+    
+    static func patientChangeTime(id: Int) -> String {
+        return "patient/\(id)/changeTime"
+    }
+    
+    static func patientAverageData(id: Int) -> String {
+        return "patient/\(id)/averageData"
+    }
+    
+    static func patientAlertList(id: Int) -> String {
+        return "patient/\(id)/alert"
+    }
+    
+    static func userPatientsList(code: String) -> String {
+        return "user/caregiver/\(code)/patients"
+    }
 }

@@ -21,10 +21,10 @@ enum CaregiverStatus {
     case offToday
 }
 
-enum CaregiverRole {
-    case caregiver
-    case doctor
-    case nurse
-    case nursingAssistant
-    case other
+enum CaregiverRole: String, Codable {
+    case caregiver = "CAREGIVER"
+    case doctor = "DOCTOR"
+    case nurse = "NURSE"
+    case nursingAssistant = "NURSING_ASSISTANT"
+    case other = "OTHER"
 }
