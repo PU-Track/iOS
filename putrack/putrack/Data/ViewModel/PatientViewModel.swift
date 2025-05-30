@@ -77,7 +77,7 @@ final class PatientViewModel: ObservableObject {
     
     var formattedLastChangeTime: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd HH시 mm분"
+        formatter.dateFormat = "MM월 dd일 HH시 mm분"
         return formatter.string(from: patient.lastPositionChangeTime)
     }
     

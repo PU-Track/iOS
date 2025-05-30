@@ -13,8 +13,7 @@ struct RootView: View {
     
     var body: some View {
         Group {
-            LoginView()
-            //HomeView(userCode: appState.userCode ?? "")
+            HomeView(userCode: appState.userCode ?? "")
 //            if showLaunchScreen {
 //                LaunchScreenView()
 //                    .transition(.opacity)

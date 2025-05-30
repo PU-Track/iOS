@@ -20,14 +20,26 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 0) {
-                VStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("환영합니다, \(viewModel.caregiver.name)님")
-                            .font(.title2).bold()
+                HStack(alignment: .center, spacing: 20){
+                    Spacer()
+                    ZStack {
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: 120, height: 120)
                         
-                        Text("역할: \(viewModel.roleText)")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                        Image(.profileDoctor1)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 120, height: 120)
+                            .clipShape(Circle())
+                    }
+                    .padding([.top, .trailing], 10)
+                    .padding(.leading, 5)
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("\(viewModel.caregiver.name) \(viewModel.roleText)님")
+                            .font(.title3).bold()
+                            .foregroundColor(.white)
                         
                         Text("상태: \(viewModel.statusText)")
                             .font(.subheadline)
@@ -35,28 +47,37 @@ struct HomeView: View {
                         
                         Text("담당 환자 수: \(viewModel.caregiver.assignedPatients.count)명")
                             .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
                     }
-                    .padding([.top, .leading, .trailing])
+                    .padding(.top, 10)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.deepBlue)
-                    .padding(.bottom, 0)
-                    
-                    BottomRoundedView(radius: 30)
-                        .frame(height: 30)
                 }
+                .background(Color.deepBlue)
+                
+                BottomRoundedView(radius: 50)
+                    .frame(height: 40)
                 
                 ZStack {
                     Color.white.ignoresSafeArea()
+                    
+                    List(Array(viewModel.patients.enumerated()), id: \.element.patient.id) { index, viewModel in
+                        VStack(spacing: 13) {
+                            NavigationLink(destination: PatientView(patientViewModel: viewModel)) {
+                                PatientCellView(viewModel: viewModel)
+                            }
 
-                    List(viewModel.patients, id: \.patient.id) { viewModel in
-                        NavigationLink(destination: PatientView(patientViewModel: viewModel)) {
-                            PatientCellView(viewModel: viewModel)
+                            Divider()
+                                .frame(height: 0.5)
+                                .background(Color.blue)
                         }
                         .listRowBackground(Color.white)
+                        .listRowSeparator(.hidden)
+                        .padding(.top, index == 0 ? 30 : 0)
                     }
                     .scrollContentBackground(.hidden)
+                    .listStyle(.plain)
                 }
+                .padding(.horizontal, 5)
             }
         }
     }

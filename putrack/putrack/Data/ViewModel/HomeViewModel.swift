@@ -44,7 +44,7 @@ final class HomeViewModel: ObservableObject {
             ),
             Patient(
                 id: 2,
-                name: "마이멜로디",
+                name: "마이멜",
                 gender: .male,
                 age: 82,
                 height: 150.0,
@@ -55,7 +55,7 @@ final class HomeViewModel: ObservableObject {
             ),
             Patient(
                 id: 3,
-                name: "폼폼푸린",
+                name: "폼폼푸",
                 gender: .male,
                 age: 78,
                 height: 165.0,
@@ -66,7 +66,7 @@ final class HomeViewModel: ObservableObject {
             ),
             Patient(
                 id: 4,
-                name: "헬로키티",
+                name: "헬로키",
                 gender: .female,
                 age: 75,
                 height: 155.0,
@@ -77,7 +77,7 @@ final class HomeViewModel: ObservableObject {
             ),
             Patient(
                 id: 5,
-                name: "리틀트윈스",
+                name: "리틀트",
                 gender: .male,
                 age: 85,
                 height: 160.0,

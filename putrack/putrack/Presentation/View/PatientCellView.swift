@@ -9,31 +9,41 @@ import SwiftUI
 
 struct PatientCellView: View {
     @ObservedObject var viewModel: PatientViewModel
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Text("\(viewModel.patient.name) (\(viewModel.genderShortText))")
-                    .font(.headline)
-                Spacer()
-                Text("\(viewModel.patient.age)세")
-                    .foregroundColor(.gray)
+        HStack(alignment: .center, spacing: 30) {
+            VStack(alignment: .center, spacing: 8) {
+                Image(uiImage: viewModel.patient.gender == .male ? UIImage.patientMan : UIImage.patientWoman)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80, height: 80)
+                
+                Text("\(viewModel.patient.name) 환자")
+                    .font(.subheadline)
             }
-
-            Text("상태: \(viewModel.statusText)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            Text("마지막 체위변경: \(viewModel.formattedLastChangeTime)")
-                .font(.caption)
-
-            Text("남은 시간: \(viewModel.formattedRemainingTime)")
-                .font(.caption)
-                .foregroundColor(viewModel.remainingTimeColor)
-
-            Text("현재 앉아있는 시간: \(viewModel.formattedElapsedTime)")
-                .font(.caption2)
-                .foregroundColor(.gray)
+            
+            VStack(alignment: .leading, spacing: 3) {
+                Text("\(viewModel.patient.age)세 \(viewModel.patient.gender)")
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 8)
+                
+                Text("현재 상태: \(viewModel.statusText)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text("변경 시점: \(viewModel.formattedLastChangeTime)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 4)
+                
+                Text("유지 시간: \(viewModel.formattedElapsedTime)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                
+                Text("남은 시간: \(viewModel.formattedRemainingTime)")
+                    .font(.caption)
+                    .foregroundColor(viewModel.remainingTimeColor)
+            }
         }
         .padding(.bottom, 4)
     }
