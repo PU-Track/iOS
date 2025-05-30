@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4167B1C2DEA29C00078FA2A /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E4167B1B2DEA29C00078FA2A /* SwiftUICharts */; };
 		E4B774CC2DE47B620093B532 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774CB2DE47B620093B532 /* FirebaseCore */; };
 		E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774CD2DE47B620093B532 /* FirebaseMessaging */; };
 		E4B774D22DE47E510093B532 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774D12DE47E510093B532 /* FirebaseAnalytics */; };
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */,
+				E4167B1C2DEA29C00078FA2A /* SwiftUICharts in Frameworks */,
 				E4B774CC2DE47B620093B532 /* FirebaseCore in Frameworks */,
 				E4B774D22DE47E510093B532 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -82,6 +84,7 @@
 				E4B774CB2DE47B620093B532 /* FirebaseCore */,
 				E4B774CD2DE47B620093B532 /* FirebaseMessaging */,
 				E4B774D12DE47E510093B532 /* FirebaseAnalytics */,
+				E4167B1B2DEA29C00078FA2A /* SwiftUICharts */,
 			);
 			productName = putrack;
 			productReference = E44D73D62DD5B4BB0073E729 /* putrack.app */;
@@ -113,6 +116,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E4167B1A2DEA29BF0078FA2A /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E44D73952DD5AC580073E729;
@@ -370,6 +374,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E4167B1A2DEA29BF0078FA2A /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
 		E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -381,6 +393,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E4167B1B2DEA29C00078FA2A /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4167B1A2DEA29BF0078FA2A /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
 		E4B774CB2DE47B620093B532 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

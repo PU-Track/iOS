@@ -196,19 +196,19 @@ struct PatientView: View {
                 NavigationLink(destination: ChangeView(status: patientViewModel.statusText)) {
                     Text("POSTURE CHANGE")
                         .padding()
-                        .background(Color.middleBlue)
+                        .background(Color.deepCoral)
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
                 .padding(.top, 20)
                 
-                Button("OVERVIEW") {
-                    print("tapped overview\n")
+                NavigationLink(destination: OverviewView()) {
+                    Text("OVERVIEW")
+                        .padding()
+                        .background(Color.deepCoral)
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
                 }
-                .padding()
-                .background(Color.middleBlue)
-                .foregroundColor(.white)
-                .clipShape(Capsule())
                 .padding(.top, 20)
             }
             

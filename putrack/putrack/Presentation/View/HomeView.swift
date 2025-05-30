@@ -54,8 +54,15 @@ struct HomeView: View {
                 }
                 .background(Color.deepBlue)
                 
-                BottomRoundedView(radius: 50)
-                    .frame(height: 40)
+                ZStack(alignment: .center) {
+                    BottomRoundedView(radius: 50)
+                        .frame(height: 70)
+                    
+                    //TODO: 로고 넣기
+                    Image(systemName: "plus")
+                        .foregroundColor(.white)
+                        .font(.system(size: 30, weight: .bold))
+                }
                 
                 ZStack {
                     Color.white.ignoresSafeArea()
