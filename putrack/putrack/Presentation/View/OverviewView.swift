@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OverviewView: View {
-    @StateObject private var viewModel = OverviewViewModel()
+    @StateObject var viewModel: OverviewViewModel
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -74,18 +74,20 @@ extension OverviewView {
             GeometryReader { geo in
                 let width = geo.size.width
                 let height = geo.size.height
-                let barWidth = width / CGFloat(viewModel.currentData.count) * 0.5
+                let barCount = max(viewModel.thisWeekSelectedData.count, 1)
+                let barWidth = width / CGFloat(barCount) * 0.5
                 let availableHeight = height - 20
                 let range = viewModel.currentRange
                 let minHeightRatio: CGFloat = 0.2
                 
                 HStack(alignment: .bottom, spacing: 10) {
                     Spacer()
-                    ForEach(viewModel.currentData, id: \.0) { day, value in
+                    ForEach(viewModel.thisWeekSelectedData, id: \.0) { day, value in
                         let clamped = max(min(value, range.max), range.min)
-                        let rawRatio = (clamped - range.min) / (range.max - range.min)
+                        let denominator = max(range.max - range.min, 0.01)
+                        let rawRatio = (clamped - range.min) / denominator
                         let ratio = minHeightRatio + (1 - minHeightRatio) * rawRatio
-                        let barHeight = CGFloat(ratio) * availableHeight
+                        let barHeight = value != 0 ? CGFloat(ratio) * availableHeight : 0
                         
                         VStack(spacing: 4) {
                             Text(String(format: "%.1f", value))

@@ -20,3 +20,20 @@ struct WeekDataEntry: Codable {
     let cushionTemp: Double
     let changeInterval: Double
 }
+
+extension WeeklySummaryResponse {
+    func toFullChartDataDict() -> [String: [String: [(String, Double)]]] {
+        let mapData: ([WeekDataEntry]) -> [String: [(String, Double)]] = { entries in
+            return [
+                "Air Temp": entries.map { ($0.dayOfWeek, $0.airTemp) },
+                "Humidity": entries.map { ($0.dayOfWeek, $0.airHumid) },
+                "Sitting Temp": entries.map { ($0.dayOfWeek, $0.cushionTemp) }
+            ]
+        }
+
+        return [
+            "This Week": mapData(thisWeekData),
+            "Last Week": mapData(lastWeekData)
+        ]
+    }
+}

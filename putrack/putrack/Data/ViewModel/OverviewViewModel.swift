@@ -8,33 +8,44 @@
 import SwiftUI
 
 final class OverviewViewModel: ObservableObject {
-    @Published var selectedMetric: String = "Air Temp"
+    
+    let patientId: Int
+    @Published var selectedMetric: String = "Humidity"
     @Published var selectedDay: String? = nil
     
-    let metrics = ["Air Temp", "Humidity", "Sitting Temp"]
+    private let patientService = PatientService()
     
-    let dataDict: [String: [(String, Double)]] = [
-        "Air Temp": [
-            ("Mon", 26.5), ("Tue", 27.1), ("Wed", 26.8),
-            ("Thu", 27.4), ("Fri", 26.7), ("Sat", 27.2), ("Sun", 26.9)
-        ],
-        "Humidity": [
-            ("Mon", 45.0), ("Tue", 50.0), ("Wed", 48.0),
-            ("Thu", 52.0), ("Fri", 47.0), ("Sat", 49.0), ("Sun", 46.0)
-        ],
-        "Sitting Temp": [
-            ("Mon", 36.5), ("Tue", 37.1), ("Wed", 36.8),
-            ("Thu", 37.2), ("Fri", 36.9), ("Sat", 37.0), ("Sun", 36.7)
-        ]
-    ]
+    init(patientId: Int) {
+        self.patientId = patientId
+        
+        Task {
+            await fetchPatientAverageData()
+        }
+    }
     
-    var currentData: [(String, Double)] {
-        dataDict[selectedMetric] ?? []
+    let metrics = ["Humidity", "Air Temp", "Sitting Temp"]
+    
+    var lastWeekData: [String: [(String, Double)]] = [:]
+    var thisWeekData: [String: [(String, Double)]] = [:]
+    
+    var thisWeekSelectedData: [(String, Double)] {
+        let allDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+        let raw = thisWeekData[selectedMetric] ?? []
+        let dict = Dictionary(uniqueKeysWithValues: raw)
+        return allDays.map { ($0, dict[$0] ?? 0.0) }
+    }
+    
+    var lastWeekSelectedData: [(String, Double)] {
+        lastWeekData[selectedMetric] ?? []
     }
     
     var currentRange: (min: Double, max: Double) {
-        let values = currentData.map { $0.1 }
-        return (values.min() ?? 0.0, values.max() ?? 1.0)
+        let values = thisWeekSelectedData.map { $0.1 }
+        let nonZeroValues = values.filter { $0 != 0.0 }
+        let min = nonZeroValues.min() ?? 0.0
+        let max = values.max() ?? 1.0
+        
+        return (min, max)
     }
     
     func summaryText(for day: String?) -> String {
@@ -42,5 +53,23 @@ final class OverviewViewModel: ObservableObject {
             return "Tap a bar to view the summary for that day."
         }
         return "\(day)'s \(selectedMetric.lowercased()) reading was selected."
+    }
+}
+
+// MARK: - API
+
+extension OverviewViewModel {
+    private func fetchPatientAverageData() async {
+        do {
+            let summary = try await patientService.getPatientAverageData(patientId: patientId)
+            let chart = summary.toFullChartDataDict()
+            await MainActor.run {
+                self.lastWeekData = chart["Last Week"] ?? [:]
+                self.thisWeekData = chart["This Week"] ?? [:]
+            }
+            print(thisWeekData)
+        } catch {
+            print("❌ patientService.getPatientAverageData error: \(error)")
+        }
     }
 }

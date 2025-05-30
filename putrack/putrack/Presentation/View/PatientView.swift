@@ -202,7 +202,7 @@ struct PatientView: View {
                 }
                 .padding(.top, 20)
                 
-                NavigationLink(destination: OverviewView()) {
+                NavigationLink(destination: OverviewView(viewModel: OverviewViewModel(patientId: patientViewModel.patient.id))) {
                     Text("OVERVIEW")
                         .padding()
                         .background(Color.deepCoral)
