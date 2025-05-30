@@ -5,14 +5,24 @@
 //  Created by 신지원 on 5/17/25.
 //
 
-struct Caregiver: Identifiable {
-    let id: Int
+struct Caregiver {
     let name: String
     let gender: Gender
     let role: CaregiverRole
     let age: Int
-    let assignedPatients: [Patient]
+    let assignedPatients: Int
     let status: CaregiverStatus
+}
+extension CaregiverResponse {
+    func toEntity() -> Caregiver {
+        return Caregiver(
+            name: self.name,
+            gender: self.gender,
+            role: self.role,
+            age: self.age,
+            assignedPatients: 4,
+            status: .working)
+    }
 }
 
 enum CaregiverStatus {

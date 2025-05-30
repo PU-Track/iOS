@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class HomeViewModel: ObservableObject {
-    @Published var caregiver: Caregiver
+    @Published var caregiver: Caregiver = Caregiver(name: "", gender: .male, role: .caregiver, age: 0, assignedPatients: 0, status: .working)
     @Published var patients: [PatientViewModel] = []
     var userCode: String
     
@@ -16,105 +16,13 @@ final class HomeViewModel: ObservableObject {
     private let patientService = PatientService()
     
     init(userCode: String) {
+        
         // 초기 데이터 세팅
-        
         self.userCode = userCode
-        let result = Self.loadMockData()
-        self.caregiver = result.caregiver
-        self.patients = result.patients
-    }
-    
-    // 데이터 로드
-    static func loadMockData() -> (caregiver: Caregiver, patients: [PatientViewModel]) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        
-        let rawPatients = [
-            Patient(
-                id: 1,
-                name: "쿠로미",
-                gender: .female,
-                age: 80,
-                height: 150.0,
-                weight: 47.0,
-                status: .lying,
-                lastPositionChangeTime: formatter.date(from: "2025-05-19T11:50:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T13:00:00")!,
-                humidity: 0.6,
-                temperature: 37.0,
-                sittingTemperature: 23.7
-            ),
-            Patient(
-                id: 2,
-                name: "마이멜",
-                gender: .male,
-                age: 82,
-                height: 150.0,
-                weight: 48.0,
-                status: .sitting,
-                lastPositionChangeTime: formatter.date(from: "2025-05-19T12:10:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:40:00")!,
-                humidity: 0.6,
-                temperature: 37.0,
-                sittingTemperature: 23.7
-            ),
-            Patient(
-                id: 3,
-                name: "폼폼푸",
-                gender: .male,
-                age: 78,
-                height: 165.0,
-                weight: 60.0,
-                status: .lying,
-                lastPositionChangeTime: formatter.date(from: "2025-05-19T12:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T14:30:00")!,
-                humidity: 0.6,
-                temperature: 37.0,
-                sittingTemperature: 23.7
-            ),
-            Patient(
-                id: 4,
-                name: "헬로키",
-                gender: .female,
-                age: 75,
-                height: 155.0,
-                weight: 52.0,
-                status: .sitting,
-                lastPositionChangeTime: formatter.date(from: "2025-05-19T11:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:00:00")!,
-                humidity: 0.6,
-                temperature: 37.0,
-                sittingTemperature: 23.7
-            ),
-            Patient(
-                id: 5,
-                name: "리틀트",
-                gender: .male,
-                age: 85,
-                height: 160.0,
-                weight: 65.0,
-                status: .sitting,
-                lastPositionChangeTime: formatter.date(from: "2025-05-19T10:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T10:40:00")!,
-                humidity: 0.6,
-                temperature: 37.0,
-                sittingTemperature: 23.7
-            )
-        ]
-        
-        let caregiver = Caregiver(
-            id: 0,
-            name: "신지원",
-            gender: .female,
-            role: .caregiver,
-            age: 30,
-            assignedPatients: rawPatients,
-            status: .working
-        )
-        
-        let patientVMs = rawPatients.map { PatientViewModel(patient: $0) }
-        return (caregiver: caregiver, patients: patientVMs)
+        Task {
+            await fetchCaregiverData()
+            await fetchPatientListData()
+        }
     }
     
     var roleText: String {
@@ -140,6 +48,35 @@ final class HomeViewModel: ObservableObject {
         case .working: return .green
         case .resting: return .orange
         case .offToday: return .red
+        }
+    }
+}
+
+// MARK: - API
+
+extension HomeViewModel {
+    private func fetchCaregiverData() async {
+        do {
+            let dto = try await caregiverService.getCaregiverData(code: userCode)
+            await MainActor.run {
+                self.caregiver = dto.toEntity()
+                print(dto)
+            }
+        } catch {
+            print("❌ caregiverService.getCaregiverData error: \(error)")
+        }
+    }
+    
+    private func fetchPatientListData() async {
+        do {
+            let dto = try await patientService.getPatientsList(code: userCode).patientList
+            let vms = dto.map { PatientViewModel(patient: $0.toEntity()) }
+            await MainActor.run {
+                self.patients = vms
+                print(vms)
+            }
+        } catch {
+            print("❌ patientService.getPatientsList error: \(error)")
         }
     }
 }

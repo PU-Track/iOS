@@ -21,3 +21,22 @@ struct Patient: Identifiable {
     let temperature: Float
     let sittingTemperature: Float
 }
+
+extension PatientDetail {
+    func toEntity() -> Patient {
+        return Patient(
+            id: patientId,
+            name: name,
+            gender: gender,
+            age: age,
+            height: Float(height),
+            weight: Float(weight),
+            status: status,
+            lastPositionChangeTime: Date(),
+            nextPositionChangeTime: Date(),
+            humidity: 0.0,
+            temperature: 0.0,
+            sittingTemperature: 0.0
+        )
+    }
+}

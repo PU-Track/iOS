@@ -45,7 +45,7 @@ struct HomeView: View {
                             .font(.subheadline)
                             .foregroundColor(viewModel.statusColor)
                         
-                        Text("담당 환자 수: \(viewModel.caregiver.assignedPatients.count)명")
+                        Text("담당 환자 수: \(viewModel.caregiver.assignedPatients)명")
                             .font(.subheadline)
                             .foregroundColor(.white)
                     }

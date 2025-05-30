@@ -13,18 +13,17 @@ struct RootView: View {
     
     var body: some View {
         Group {
-            HomeView(userCode: appState.userCode ?? "")
-//            if showLaunchScreen {
-//                LaunchScreenView()
-//                    .transition(.opacity)
-//                    .ignoresSafeArea()
-//            } else {
-//                if appState.isLoggedIn {
-//                    HomeView(userCode: appState.userCode ?? "")
-//                } else {
-//                    LoginView()
-//                }
-//            }
+            if showLaunchScreen {
+                LaunchScreenView()
+                    .transition(.opacity)
+                    .ignoresSafeArea()
+            } else {
+                if appState.isLoggedIn {
+                    HomeView(userCode: appState.userCode ?? "")
+                } else {
+                    LoginView()
+                }
+            }
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
