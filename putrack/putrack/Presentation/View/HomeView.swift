@@ -80,5 +80,6 @@ struct HomeView: View {
                 .padding(.horizontal, 5)
             }
         }
+        .tint(.gray)
     }
 }

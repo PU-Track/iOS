@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PatientView: View {
     @ObservedObject var patientViewModel: PatientViewModel
-    @StateObject private var nfcViewModel = NFCViewModel()
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -159,7 +158,7 @@ struct PatientView: View {
                                     Text(patientViewModel.formattedElapsedTimeWithSecond)
                                         .font(.title3)
                                         .foregroundColor(.white)
-                                        .padding(.trailing ,12)
+                                        .padding(.trailing, 12)
                                 }
                             }
                         }
@@ -194,14 +193,13 @@ struct PatientView: View {
             .padding([.horizontal], 20)
             
             HStack(alignment: .center, spacing: 20) {
-                Button("CHANGE") {
-                    print("tapped change status\n")
-                    //nfcViewModel.startScanning()
+                NavigationLink(destination: ChangeView(status: patientViewModel.statusText)) {
+                    Text("POSTURE CHANGE")
+                        .padding()
+                        .background(Color.middleBlue)
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
                 }
-                .padding()
-                .background(Color.middleBlue)
-                .foregroundColor(.white)
-                .clipShape(Capsule())
                 .padding(.top, 20)
                 
                 Button("OVERVIEW") {
