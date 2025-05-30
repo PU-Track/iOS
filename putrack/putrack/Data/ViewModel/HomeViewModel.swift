@@ -38,9 +38,12 @@ final class HomeViewModel: ObservableObject {
                 age: 80,
                 height: 150.0,
                 weight: 47.0,
-                status: .bedridden,
+                status: .lying,
                 lastPositionChangeTime: formatter.date(from: "2025-05-19T11:50:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T13:00:00")!
+                nextPositionChangeTime: formatter.date(from: "2025-05-19T13:00:00")!,
+                humidity: 0.6,
+                temperature: 37.0,
+                sittingTemperature: 23.7
             ),
             Patient(
                 id: 2,
@@ -51,7 +54,10 @@ final class HomeViewModel: ObservableObject {
                 weight: 48.0,
                 status: .sitting,
                 lastPositionChangeTime: formatter.date(from: "2025-05-19T12:10:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:40:00")!
+                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:40:00")!,
+                humidity: 0.6,
+                temperature: 37.0,
+                sittingTemperature: 23.7
             ),
             Patient(
                 id: 3,
@@ -60,9 +66,12 @@ final class HomeViewModel: ObservableObject {
                 age: 78,
                 height: 165.0,
                 weight: 60.0,
-                status: .bedridden,
+                status: .lying,
                 lastPositionChangeTime: formatter.date(from: "2025-05-19T12:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T14:30:00")!
+                nextPositionChangeTime: formatter.date(from: "2025-05-19T14:30:00")!,
+                humidity: 0.6,
+                temperature: 37.0,
+                sittingTemperature: 23.7
             ),
             Patient(
                 id: 4,
@@ -73,7 +82,10 @@ final class HomeViewModel: ObservableObject {
                 weight: 52.0,
                 status: .sitting,
                 lastPositionChangeTime: formatter.date(from: "2025-05-19T11:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:00:00")!
+                nextPositionChangeTime: formatter.date(from: "2025-05-19T15:00:00")!,
+                humidity: 0.6,
+                temperature: 37.0,
+                sittingTemperature: 23.7
             ),
             Patient(
                 id: 5,
@@ -82,9 +94,12 @@ final class HomeViewModel: ObservableObject {
                 age: 85,
                 height: 160.0,
                 weight: 65.0,
-                status: .bedridden,
+                status: .sitting,
                 lastPositionChangeTime: formatter.date(from: "2025-05-19T10:00:00")!,
-                nextPositionChangeTime: formatter.date(from: "2025-05-19T10:40:00")!
+                nextPositionChangeTime: formatter.date(from: "2025-05-19T10:40:00")!,
+                humidity: 0.6,
+                temperature: 37.0,
+                sittingTemperature: 23.7
             )
         ]
         

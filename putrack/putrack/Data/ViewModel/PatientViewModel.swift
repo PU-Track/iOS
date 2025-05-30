@@ -83,7 +83,7 @@ final class PatientViewModel: ObservableObject {
     
     var formattedLastChangeTimeWithDetail: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd HH시 mm분 ss초"
+        formatter.dateFormat = "MM월 dd일 HH시 mm분 ss초"
         return formatter.string(from: patient.lastPositionChangeTime)
     }
     
@@ -108,7 +108,7 @@ final class PatientViewModel: ObservableObject {
     
     var statusText: String {
         switch patient.status {
-        case .bedridden: return "누운 상태"
+        case .lying: return "누운 상태"
         case .sitting: return "앉은 상태"
         case .sleeping: return "수면 중"
         }

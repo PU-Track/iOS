@@ -33,7 +33,7 @@ struct LoginView: View {
                     Spacer()
                     Image(.wave)
                         .resizable()
-                        .frame(width: 220, height: 300)
+                        .frame(height: 300)
                         .padding(.leading)
                 }
                 Spacer()

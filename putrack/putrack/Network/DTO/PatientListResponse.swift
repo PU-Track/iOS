@@ -18,10 +18,10 @@ struct PatientDetail: Codable {
     let weight: Double
     let height: Double
     let gender: Gender
-    let status: PatientStatusHO
+    let status: PatientStatus
 }
 
-enum PatientStatusHO: String, Codable {
+enum PatientStatus: String, Codable {
     case lying = "LYING"
     case sitting = "SITTING"
     case sleeping = "SLEEPING"

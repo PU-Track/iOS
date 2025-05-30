@@ -17,11 +17,7 @@ struct Patient: Identifiable {
     let status: PatientStatus
     let lastPositionChangeTime: Date
     let nextPositionChangeTime: Date
-    //온습도, 방석온도 추가
-}
-
-enum PatientStatus {
-    case bedridden
-    case sitting
-    case sleeping
+    let humidity: Float
+    let temperature: Float
+    let sittingTemperature: Float
 }

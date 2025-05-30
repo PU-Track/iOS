@@ -68,7 +68,7 @@ struct HomeView: View {
 
                             Divider()
                                 .frame(height: 0.5)
-                                .background(Color.blue)
+                                .background(Color.middleBlue)
                         }
                         .listRowBackground(Color.white)
                         .listRowSeparator(.hidden)
