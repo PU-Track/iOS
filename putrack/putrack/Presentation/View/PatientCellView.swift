@@ -11,7 +11,7 @@ struct PatientCellView: View {
     @ObservedObject var viewModel: PatientViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text("\(viewModel.patient.name) (\(viewModel.genderShortText))")
                     .font(.headline)
@@ -35,6 +35,6 @@ struct PatientCellView: View {
                 .font(.caption2)
                 .foregroundColor(.gray)
         }
-        .padding(.vertical, 4)
+        .padding(.bottom, 4)
     }
 }
