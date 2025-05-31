@@ -116,11 +116,12 @@ struct LoginView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
+            .ignoresSafeArea(.keyboard)
         }
     }
 }
 
-//MARK: API
+//MARK: API 
 
 extension LoginView {
     private func login() {

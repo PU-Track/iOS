@@ -58,10 +58,10 @@ struct HomeView: View {
                     BottomRoundedView(radius: 50)
                         .frame(height: 70)
                     
-                    //TODO: 로고 넣기
-                    Image(systemName: "plus")
-                        .foregroundColor(.white)
-                        .font(.system(size: 30, weight: .bold))
+                    Image(.logo)
+                        .resizable()
+                        .frame(width: 50, height: 35)
+                        .background(Color.clear)
                 }
                 
                 ZStack {
