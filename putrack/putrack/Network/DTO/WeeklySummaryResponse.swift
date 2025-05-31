@@ -19,6 +19,7 @@ struct WeekDataEntry: Codable {
     let airHumid: Double
     let cushionTemp: Double
     let changeInterval: Double
+    let alert: String
 }
 
 extension WeeklySummaryResponse {
@@ -27,13 +28,19 @@ extension WeeklySummaryResponse {
             return [
                 "Air Temp": entries.map { ($0.dayOfWeek, $0.airTemp) },
                 "Humidity": entries.map { ($0.dayOfWeek, $0.airHumid) },
-                "Sitting Temp": entries.map { ($0.dayOfWeek, $0.cushionTemp) }
+                "Sitting Temp": entries.map { ($0.dayOfWeek, $0.cushionTemp) },
             ]
         }
-
+        
         return [
             "This Week": mapData(thisWeekData),
             "Last Week": mapData(lastWeekData)
         ]
+    }
+    
+    func toAlertData() -> [(String, String)] {
+        return thisWeekData.map { entry in
+            (entry.dayOfWeek, entry.alert)
+        }
     }
 }

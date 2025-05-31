@@ -12,8 +12,12 @@ final class PatientService {
     private let baseURL = Config.baseURL
     
     //환자 체위변경 정보 API
-    func postPatientChangeTime(patientId: Int, patientData: ChangeTimeRequest) async throws -> ChangeTimeResponse {
-        let components = URLComponents(string: baseURL + EndPoint.patientChangeTime(id: patientId))
+    func postPatientChangeTime(patientId: Int, patientData: ChangeTimeRequest, code: String) async throws -> ChangeTimeResponse {
+        var components = URLComponents(string: baseURL + EndPoint.patientChangeTime(id: patientId))
+        
+        components?.queryItems = [
+            URLQueryItem(name: "code", value: code)
+        ]
         
         guard let url = components?.url else {
             throw URLError(.badURL)

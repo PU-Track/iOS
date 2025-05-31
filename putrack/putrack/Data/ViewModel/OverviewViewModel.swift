@@ -27,6 +27,7 @@ final class OverviewViewModel: ObservableObject {
     
     var lastWeekData: [String: [(String, Double)]] = [:]
     var thisWeekData: [String: [(String, Double)]] = [:]
+    var thisWeekAlertData: [(String, String)] = []
     
     var thisWeekSelectedData: [(String, Double)] {
         let allDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
@@ -52,7 +53,12 @@ final class OverviewViewModel: ObservableObject {
         guard let day = day else {
             return "Tap a bar to view the summary for that day."
         }
-        return "\(day)'s \(selectedMetric.lowercased()) reading was selected."
+        
+        if let alert = thisWeekAlertData.first(where: { $0.0 == day })?.1 {
+            return "\(day): \(alert)"
+        } else {
+            return "No alert data available for \(day)."
+        }
     }
 }
 
@@ -63,9 +69,11 @@ extension OverviewViewModel {
         do {
             let summary = try await patientService.getPatientAverageData(patientId: patientId)
             let chart = summary.toFullChartDataDict()
+            let alertMessage = summary.toAlertData()
             await MainActor.run {
                 self.lastWeekData = chart["Last Week"] ?? [:]
                 self.thisWeekData = chart["This Week"] ?? [:]
+                self.thisWeekAlertData = alertMessage
             }
             print(thisWeekData)
         } catch {
