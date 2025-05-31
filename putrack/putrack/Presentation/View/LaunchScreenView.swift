@@ -9,19 +9,13 @@ import SwiftUI
 
 struct LaunchScreenView: View {
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            Color.white
+        ZStack(alignment: .center) {
+            Color.deepBlue
                 .ignoresSafeArea()
             
-            VStack {
-                Text("PU-TRACK")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.top, 60)
-                Spacer()
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
+            Image(.logoWithName)
+                .resizable()
+                .frame(width: 280, height: 142)
         }
     }
 }

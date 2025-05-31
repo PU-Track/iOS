@@ -26,7 +26,7 @@ struct LoginView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(maxHeight: .infinity, alignment: .bottom)
-                .ignoresSafeArea(edges: .bottom)
+                .ignoresSafeArea()
             
             VStack {
                 HStack {
@@ -38,90 +38,91 @@ struct LoginView: View {
                 }
                 Spacer()
             }
+            .ignoresSafeArea()
             
-            VStack(spacing: 20) {
-                
-                Spacer()
-                
-                Text("ENTER YOUR CODE")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(.bottom, 20)
-                
-                ZStack {
-                    // 기본 텍스트필드 설정
-                    TextField("", text: $userCode)
-                        .onChange(of: userCode) { newValue in
-                            // 4글자까지만 작성가능하도록 수정
-                            let filtered = newValue.uppercased().filter { $0.isLetter && $0.isASCII }
-                            userCode = String(filtered.prefix(4))
-                        }
-                        .keyboardType(.asciiCapable)
-                        .textContentType(.oneTimeCode)
-                        .foregroundColor(.clear)
-                        .accentColor(.clear)
-                        .disableAutocorrection(true)
-                        .focused($isFocused)
-                        .onAppear { DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { isFocused = true } }
+            ScrollView {
+                VStack(spacing: 20) {
+                    Spacer(minLength: 100)
                     
-                    // 커스텀 텍스트필드 설정
-                    HStack(spacing: 13) {
-                        ForEach(0..<4, id: \.self) { index in
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 1)
-                                    .frame(width: 53, height: 65)
-                                Text(index < userCode.count ? String(userCode[userCode.index(userCode.startIndex, offsetBy: index)]) : "")
-                                    .font(.title)
-                                    .bold()
+                    Text("ENTER YOUR CODE")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.bottom, 20)
+                    
+                    ZStack {
+                        TextField("", text: $userCode)
+                            .onChange(of: userCode) { newValue in
+                                let filtered = newValue.uppercased().filter { $0.isLetter && $0.isASCII }
+                                userCode = String(filtered.prefix(4))
+                            }
+                            .keyboardType(.asciiCapable)
+                            .textContentType(.oneTimeCode)
+                            .foregroundColor(.clear)
+                            .accentColor(.clear)
+                            .disableAutocorrection(true)
+                            .focused($isFocused)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    isFocused = true
+                                }
+                            }
+                        
+                        HStack(spacing: 13) {
+                            ForEach(0..<4, id: \.self) { index in
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray, lineWidth: 1)
+                                        .frame(width: 53, height: 65)
+                                    Text(index < userCode.count ? String(userCode[userCode.index(userCode.startIndex, offsetBy: index)]) : "")
+                                        .font(.title)
+                                        .bold()
+                                }
                             }
                         }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            isFocused = true
+                        }
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        isFocused = true
+                    
+                    if let error = errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .font(.caption)
                     }
+                    
+                    Button("LOGIN") {
+                        login()
+                    }
+                    .disabled(userCode.count != 4)
+                    .padding()
+                    .background(userCode.count == 4 ? Color.blue : Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
+                    HStack(spacing: 4) {
+                        Text("Don't have a code?")
+                        Button("Get one here") {
+                            openURL(URL(string: "https://open.kakao.com/o/sNzYAPwh")!)
+                        }
+                        .foregroundColor(.blue)
+                        .underline()
+                    }
+                    .font(.footnote)
+                    
+                    Spacer(minLength: 100)
                 }
-                
-                // 에러메세지 발생할 때만 나타남
-                if let error = errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                }
-                
-                // 로그인 버튼
-                Button("LOGIN") {
-                    login()
-                }
-                .disabled(userCode.count != 4)
                 .padding()
-                .background(userCode.count == 4 ? Color.blue : Color.gray)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                
-                // 등록 페이지로 이동하는 버튼
-                //TODO: 웹사이트로 연결
-                HStack(spacing: 4) {
-                    Text("Don't have a code?       ")
-                    Button("Get one here") {
-                        openURL(URL(string: "https://open.kakao.com/o/sNzYAPwh")!)
-                    }
-                    .foregroundColor(.blue)
-                    .underline()
-                }
-                .font(.footnote)
-                
-                Spacer(minLength: 350)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
             .ignoresSafeArea(.keyboard)
+        }
+        .onTapGesture {
+            hideKeyboard()
         }
     }
 }
 
-//MARK: API 
+//MARK: API
 
 extension LoginView {
     private func login() {
