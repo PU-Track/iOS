@@ -12,6 +12,7 @@
 		E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774CD2DE47B620093B532 /* FirebaseMessaging */; };
 		E4B774D22DE47E510093B532 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774D12DE47E510093B532 /* FirebaseAnalytics */; };
 		E4F8A8FD2DEFA742006C407E /* CocoaMQTT in Frameworks */ = {isa = PBXBuildFile; productRef = E4F8A8FC2DEFA742006C407E /* CocoaMQTT */; };
+		E4F8A95F2DF0B431006C407E /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = E4F8A95E2DF0B431006C407E /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4F8A95F2DF0B431006C407E /* FirebaseDatabase in Frameworks */,
 				E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */,
 				E4167B1C2DEA29C00078FA2A /* SwiftUICharts in Frameworks */,
 				E4F8A8FD2DEFA742006C407E /* CocoaMQTT in Frameworks */,
@@ -88,6 +90,7 @@
 				E4B774D12DE47E510093B532 /* FirebaseAnalytics */,
 				E4167B1B2DEA29C00078FA2A /* SwiftUICharts */,
 				E4F8A8FC2DEFA742006C407E /* CocoaMQTT */,
+				E4F8A95E2DF0B431006C407E /* FirebaseDatabase */,
 			);
 			productName = putrack;
 			productReference = E44D73D62DD5B4BB0073E729 /* putrack.app */;
@@ -429,6 +432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4F8A8FB2DEFA742006C407E /* XCRemoteSwiftPackageReference "CocoaMQTT" */;
 			productName = CocoaMQTT;
+		};
+		E4F8A95E2DF0B431006C407E /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

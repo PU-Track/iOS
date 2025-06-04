@@ -60,7 +60,8 @@ struct PatientView: View {
                             Spacer()
                             HStack {
                                 Spacer()
-                                Text(String(format: "%.1f°C", patientViewModel.patient.temperature))
+                                Text(String(format: "%.1f°C", patientViewModel.airTemperatureText))
+                                //Text("26.7°C")
                                     .font(.largeTitle.bold())
                                     .foregroundColor(.white)
                                     .padding(12)
@@ -94,7 +95,8 @@ struct PatientView: View {
                             Spacer()
                             HStack {
                                 Spacer()
-                                Text(String(format: "%.1f%%", patientViewModel.patient.humidity))
+                                Text(String(format: "%.1f%%", patientViewModel.airHumidityText))
+                                //Text("46.3%")
                                     .font(.largeTitle.bold())
                                     .foregroundColor(.white)
                                     .padding(12)

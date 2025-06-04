@@ -50,7 +50,8 @@ final class OverviewViewModel: ObservableObject {
     
     func summaryText(for day: String?) -> String {
         if let alert = thisWeekAlertData.first(where: { $0.0 == day })?.1 {
-            return "\(String(describing: day)) 의 주간 요약 입니다.\n\(alert)"
+            guard let day else { return alert }
+            return "\(day) 의 주간 요약 입니다.\n\(alert)"
         } else {
             return "아직 데이터가 없어요 💁🏻‍♀️ \(day ?? "")."
         }

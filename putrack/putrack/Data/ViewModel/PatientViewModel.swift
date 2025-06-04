@@ -12,18 +12,56 @@ import Combine
 final class PatientViewModel: ObservableObject {
     @Published var patient: Patient
     private var timer: AnyCancellable?
+    private var firebaseCancellables = Set<AnyCancellable>()
     
     @Published var elapsedSinceLastChange: TimeInterval = 0
     @Published var currentRemainingTime: TimeInterval = 0
     
+    @ObservedObject private var sensorService = FirebaseService()
+    
     init(patient: Patient) {
         self.patient = patient
+        
+        observeSensorData()
         updateTime()
         startTimer()
     }
     
     deinit {
         timer?.cancel()
+        sensorService.stopObserving()
+    }
+    
+    private func observeSensorData() {
+        // Realtime Firebase 관찰 시작
+        sensorService.$airTemperature
+            .receive(on: RunLoop.main)
+            .sink { [weak self] newTemp in
+                self?.patient.temperature = Float(newTemp)
+            }
+            .store(in: &firebaseCancellables)
+        
+        sensorService.$airHumidity
+            .receive(on: RunLoop.main)
+            .sink { [weak self] newHumid in
+                self?.patient.humidity = Float(newHumid)
+            }
+            .store(in: &firebaseCancellables)
+        
+        sensorService.$cushionTemperature
+            .receive(on: RunLoop.main)
+            .sink { [weak self] newCushionTemp in
+                self?.patient.sittingTemperature = Float(newCushionTemp)
+            }
+            .store(in: &firebaseCancellables)
+    }
+    
+    var airTemperatureText: String {
+        String(format: "%.1f°C", sensorService.airTemperature)
+    }
+    
+    var airHumidityText: String {
+        String(format: "%.1f°C", sensorService.airHumidity)
     }
     
     private func updateTime() {
