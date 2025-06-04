@@ -50,14 +50,10 @@ final class OverviewViewModel: ObservableObject {
     }
     
     func summaryText(for day: String?) -> String {
-        guard let day = day else {
-            return "Tap a bar to view the summary for that day."
-        }
-        
         if let alert = thisWeekAlertData.first(where: { $0.0 == day })?.1 {
-            return "\(day): \(alert)"
+            return "\(String(describing: day)): \(alert)"
         } else {
-            return "No alert data available for \(day)."
+            return "No alert data available for \(day ?? "")."
         }
     }
 }

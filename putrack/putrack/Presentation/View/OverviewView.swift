@@ -29,7 +29,7 @@ struct OverviewView: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.orange.opacity(0.1))
                     .frame(height: 280)
-            
+                
                 VStack(alignment: .center, spacing: 0) {
                     metricButtons
                         .padding(.bottom, 30)
@@ -44,6 +44,11 @@ struct OverviewView: View {
             summaryBox
             
             Spacer()
+        }
+        .onAppear {
+            if viewModel.selectedMetric == nil, let first = viewModel.metrics.first {
+                viewModel.selectedMetric = first
+            }
         }
     }
 }
