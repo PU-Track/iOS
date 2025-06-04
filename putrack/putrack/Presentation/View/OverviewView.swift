@@ -45,11 +45,6 @@ struct OverviewView: View {
             
             Spacer()
         }
-        .onAppear {
-            if viewModel.selectedMetric == nil, let first = viewModel.metrics.first {
-                viewModel.selectedMetric = first
-            }
-        }
     }
 }
 
@@ -59,7 +54,6 @@ extension OverviewView {
             ForEach(viewModel.metrics, id: \.self) { metric in
                 Button(action: {
                     viewModel.selectedMetric = metric
-                    viewModel.selectedDay = nil
                 }) {
                     Text(metric)
                         .font(.caption.bold())

@@ -11,13 +11,12 @@ final class OverviewViewModel: ObservableObject {
     
     let patientId: Int
     @Published var selectedMetric: String = "Humidity"
-    @Published var selectedDay: String? = nil
+    @Published var selectedDay: String = "MON"
     
     private let patientService = PatientService()
     
     init(patientId: Int) {
         self.patientId = patientId
-        
         Task {
             await fetchPatientAverageData()
         }
@@ -51,9 +50,9 @@ final class OverviewViewModel: ObservableObject {
     
     func summaryText(for day: String?) -> String {
         if let alert = thisWeekAlertData.first(where: { $0.0 == day })?.1 {
-            return "\(String(describing: day)): \(alert)"
+            return "\(String(describing: day)) 의 주간 요약 입니다.\n\(alert)"
         } else {
-            return "No alert data available for \(day ?? "")."
+            return "아직 데이터가 없어요 💁🏻‍♀️ \(day ?? "")."
         }
     }
 }
@@ -70,6 +69,10 @@ extension OverviewViewModel {
                 self.lastWeekData = chart["Last Week"] ?? [:]
                 self.thisWeekData = chart["This Week"] ?? [:]
                 self.thisWeekAlertData = alertMessage
+                
+                if let first = self.thisWeekSelectedData.first?.0 {
+                    self.selectedDay = first
+                }
             }
             print(thisWeekData)
         } catch {
