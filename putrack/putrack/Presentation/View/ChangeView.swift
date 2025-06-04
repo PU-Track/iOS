@@ -8,13 +8,30 @@
 import SwiftUI
 
 struct ChangeView: View {
-    var code: String = ""
-    var patientId: Int = 0
-    var status: String = ""
-    var patientData: ChangeTimeRequest = ChangeTimeRequest(status: .sitting, airTemp: 0.0, airHumid: 0.0, cushionTemp: 0.0, postureStartTime: "")
-    @State private var selectedOption: Int? = 0
+    var code: String
+    var patientId: Int
+    var postureStatus: PostureStatus
+    var patientData: ChangeTimeRequest
+    var onFinished: ((PostureStatus, String, String) -> Void)?
+    
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var nfcViewModel = NFCViewModel()
     
+    @State private var newPostureStatus: PostureStatus
+    
+    init(code: String = "",
+             patientId: Int = 0,
+             postureStatus: PostureStatus = .lying,
+             patientData: ChangeTimeRequest = ChangeTimeRequest(status: .sitting, airTemp: 0.0, airHumid: 0.0, cushionTemp: 0.0, postureStartTime: ""),
+             onFinished: ((PostureStatus, String, String) -> Void)? = nil) {
+            self.code = code
+            self.patientId = patientId
+            self.postureStatus = postureStatus
+            self.patientData = patientData
+            self.onFinished = onFinished
+
+            _newPostureStatus = State(initialValue: postureStatus)
+        }
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -28,7 +45,7 @@ struct ChangeView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 10)
             
-            Text("NOW: \(status)")
+            Text("NOW: \(postureStatus)")
                 .font(.headline)
                 .foregroundColor(.gray)
                 .padding(.horizontal)
@@ -40,11 +57,11 @@ struct ChangeView: View {
             
             // Sitting 버튼
             Button(action: {
-                selectedOption = 0
+                self.newPostureStatus = .sitting
             }) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(
-                        selectedOption == 0 ?
+                        newPostureStatus == .sitting ?
                         LinearGradient(
                             gradient: Gradient(colors: [Color.lightCoral, Color.deepCoral]),
                             startPoint: .topLeading,
@@ -87,11 +104,11 @@ struct ChangeView: View {
             // lying, sleeping 버튼
             HStack(spacing: 10) {
                 Button(action: {
-                    selectedOption = 1
+                    newPostureStatus = .lying
                 }) {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(
-                            selectedOption == 1 ?
+                            newPostureStatus == .lying ?
                             LinearGradient(
                                 gradient: Gradient(colors: [Color.deepCoral, Color.lightCoral]),
                                 startPoint: .topLeading,
@@ -117,11 +134,11 @@ struct ChangeView: View {
                 }
                 
                 Button(action: {
-                    selectedOption = 2
+                    newPostureStatus = .sleeping
                 }) {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(
-                            selectedOption == 2 ?
+                            newPostureStatus == .sleeping ?
                             LinearGradient(
                                 gradient: Gradient(colors: [Color.lightCoral, Color.deepCoral]),
                                 startPoint: .bottomLeading,
@@ -148,15 +165,19 @@ struct ChangeView: View {
             }
             .padding(.bottom, 10)
             
-            Button("TAGGING") {
+            Button("CHANGE") {
                 //nfcViewModel.startScanning()
-                postGesture(patientId: patientId,
-                            patientData: ChangeTimeRequest(status: patientData.status,
-                                                           airTemp: patientData.airTemp,
-                                                           airHumid: patientData.airHumid,
-                                                           cushionTemp: patientData.cushionTemp,
-                                                           postureStartTime: fomattedNow()),
-                            code: code)
+                if newPostureStatus == postureStatus {
+                    dismiss()
+                } else {
+                    postGesture(patientId: patientId,
+                                patientData: ChangeTimeRequest(status: newPostureStatus,
+                                                               airTemp: patientData.airTemp,
+                                                               airHumid: patientData.airHumid,
+                                                               cushionTemp: patientData.cushionTemp,
+                                                               postureStartTime: fomattedNow()),
+                                code: code)
+                }
             }
             .padding()
             .background(Color.middleBlue)
@@ -179,6 +200,8 @@ extension ChangeView {
                                                                           patientData: patientData,
                                                                           code: code)
             print(response, "🥰")
+            dismiss()
+            onFinished?(patientData.status, response.currentDateTime, response.predictedDateTime)
         }
     }
     
@@ -192,10 +215,10 @@ extension ChangeView {
         return iso8601String
     }
     
-    private func formattedStatus(selectedOption: Int) -> String {
-        if selectedOption == 0 {
+    private func formattedStatus(postureStatus: PostureStatus) -> String {
+        if postureStatus == .sitting {
             return "SITTING"
-        } else if selectedOption == 1 {
+        } else if postureStatus == .lying {
             return "LYING"
         } else {
             return "SLEEPING"

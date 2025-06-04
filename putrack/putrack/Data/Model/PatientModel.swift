@@ -14,12 +14,12 @@ struct Patient: Identifiable {
     let age: Int
     let height: Float
     let weight: Float
-    let status: PostureStatus
-    let lastPositionChangeTime: Date
-    let nextPositionChangeTime: Date
-    let humidity: Float
-    let temperature: Float
-    let sittingTemperature: Float
+    var status: PostureStatus
+    var lastPositionChangeTime: Date
+    var nextPositionChangeTime: Date
+    var humidity: Float
+    var temperature: Float
+    var sittingTemperature: Float
 }
 
 extension PatientDetail {

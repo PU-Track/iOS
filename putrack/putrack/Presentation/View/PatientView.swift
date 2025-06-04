@@ -115,7 +115,7 @@ struct PatientView: View {
                             )
                         )
                     
-                    Text("\(patientViewModel.patient.status.rawValue)")
+                    Text(patientViewModel.statusTextWithEnglish)
                         .font(.title.bold())
                         .foregroundColor(.white.opacity(0.8))
                         .offset(x: -100, y: -20)
@@ -196,19 +196,22 @@ struct PatientView: View {
             HStack(alignment: .center, spacing: 20) {
                 NavigationLink(destination: ChangeView(code: usercode,
                                                        patientId: patientViewModel.patient.id,
-                                                       status: patientViewModel.statusText,
+                                                       postureStatus: patientViewModel.patient.status,
                                                        patientData: ChangeTimeRequest(status: patientViewModel.patient.status,
                                                                                       airTemp: Double(patientViewModel.patient.temperature),
                                                                                       airHumid: Double(patientViewModel.patient.humidity),
                                                                                       cushionTemp: Double(patientViewModel.patient.sittingTemperature),
-                                                                                      postureStartTime: ""))) {
+                                                                                      postureStartTime: ""),
+                                                       onFinished: { status, startTime, nextTime in
+                                                                   patientViewModel.updatePatientData(status: status, startTime: startTime, nextTime: nextTime)}))
+                {
                     Text("POSTURE CHANGE")
                         .padding()
                         .background(Color.deepCoral)
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
-                                                                                      .padding(.top, 20)
+                .padding(.top, 20)
                 
                 NavigationLink(destination: OverviewView(viewModel: OverviewViewModel(patientId: patientViewModel.patient.id))) {
                     Text("OVERVIEW")
