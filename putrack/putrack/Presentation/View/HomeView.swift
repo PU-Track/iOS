@@ -69,7 +69,7 @@ struct HomeView: View {
                     
                     List(Array(viewModel.patients.enumerated()), id: \.element.patient.id) { index, viewModel in
                         VStack(spacing: 13) {
-                            NavigationLink(destination: PatientView(patientViewModel: viewModel)) {
+                            NavigationLink(destination: PatientView(patientViewModel: viewModel, usercode: userCode)) {
                                 PatientCellView(viewModel: viewModel)
                             }
 

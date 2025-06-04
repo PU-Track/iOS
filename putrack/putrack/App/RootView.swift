@@ -24,6 +24,7 @@ struct RootView: View {
                     LoginView()
                 }
             }
+            //MQTTTestView()
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

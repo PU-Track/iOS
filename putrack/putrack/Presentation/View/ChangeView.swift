@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct ChangeView: View {
-    var status: String = "Sitting"
+    var code: String = ""
+    var patientId: Int = 0
+    var status: String = ""
+    var patientData: ChangeTimeRequest = ChangeTimeRequest(status: .sitting, airTemp: 0.0, airHumid: 0.0, cushionTemp: 0.0, postureStartTime: "")
     @State private var selectedOption: Int? = 0
     @StateObject private var nfcViewModel = NFCViewModel()
-
+    
+    
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text("POSTURE CHANGE")
@@ -145,7 +149,14 @@ struct ChangeView: View {
             .padding(.bottom, 10)
             
             Button("TAGGING") {
-                nfcViewModel.startScanning()
+                //nfcViewModel.startScanning()
+                postGesture(patientId: patientId,
+                            patientData: ChangeTimeRequest(status: patientData.status,
+                                                           airTemp: patientData.airTemp,
+                                                           airHumid: patientData.airHumid,
+                                                           cushionTemp: patientData.cushionTemp,
+                                                           postureStartTime: fomattedNow()),
+                            code: code)
             }
             .padding()
             .background(Color.middleBlue)
@@ -156,5 +167,38 @@ struct ChangeView: View {
             Spacer()
         }
         .padding(.horizontal, 30)
+    }
+}
+
+// NFC 리더기 없을 때 바로 서버에 쏘는 로직
+extension ChangeView {
+    private func postGesture(patientId: Int, patientData: ChangeTimeRequest, code: String) {
+        let patientService = PatientService()
+        Task {
+            let response = try await patientService.postPatientChangeTime(patientId: patientId,
+                                                                          patientData: patientData,
+                                                                          code: code)
+            print(response, "🥰")
+        }
+    }
+    
+    private func fomattedNow() -> String {
+        let now = Date()
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        let iso8601String = formatter.string(from: now)
+        return iso8601String
+    }
+    
+    private func formattedStatus(selectedOption: Int) -> String {
+        if selectedOption == 0 {
+            return "SITTING"
+        } else if selectedOption == 1 {
+            return "LYING"
+        } else {
+            return "SLEEPING"
+        }
     }
 }

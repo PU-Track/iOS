@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PatientView: View {
     @ObservedObject var patientViewModel: PatientViewModel
+    var usercode: String = ""
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -193,14 +194,21 @@ struct PatientView: View {
             .padding([.horizontal], 20)
             
             HStack(alignment: .center, spacing: 20) {
-                NavigationLink(destination: ChangeView(status: patientViewModel.statusText)) {
+                NavigationLink(destination: ChangeView(code: usercode,
+                                                       patientId: patientViewModel.patient.id,
+                                                       status: patientViewModel.statusText,
+                                                       patientData: ChangeTimeRequest(status: patientViewModel.patient.status,
+                                                                                      airTemp: Double(patientViewModel.patient.temperature),
+                                                                                      airHumid: Double(patientViewModel.patient.humidity),
+                                                                                      cushionTemp: Double(patientViewModel.patient.sittingTemperature),
+                                                                                      postureStartTime: ""))) {
                     Text("POSTURE CHANGE")
                         .padding()
                         .background(Color.deepCoral)
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
-                .padding(.top, 20)
+                                                                                      .padding(.top, 20)
                 
                 NavigationLink(destination: OverviewView(viewModel: OverviewViewModel(patientId: patientViewModel.patient.id))) {
                     Text("OVERVIEW")

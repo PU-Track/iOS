@@ -11,6 +11,7 @@
 		E4B774CC2DE47B620093B532 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774CB2DE47B620093B532 /* FirebaseCore */; };
 		E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774CD2DE47B620093B532 /* FirebaseMessaging */; };
 		E4B774D22DE47E510093B532 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E4B774D12DE47E510093B532 /* FirebaseAnalytics */; };
+		E4F8A8FD2DEFA742006C407E /* CocoaMQTT in Frameworks */ = {isa = PBXBuildFile; productRef = E4F8A8FC2DEFA742006C407E /* CocoaMQTT */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 			files = (
 				E4B774CE2DE47B620093B532 /* FirebaseMessaging in Frameworks */,
 				E4167B1C2DEA29C00078FA2A /* SwiftUICharts in Frameworks */,
+				E4F8A8FD2DEFA742006C407E /* CocoaMQTT in Frameworks */,
 				E4B774CC2DE47B620093B532 /* FirebaseCore in Frameworks */,
 				E4B774D22DE47E510093B532 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -85,6 +87,7 @@
 				E4B774CD2DE47B620093B532 /* FirebaseMessaging */,
 				E4B774D12DE47E510093B532 /* FirebaseAnalytics */,
 				E4167B1B2DEA29C00078FA2A /* SwiftUICharts */,
+				E4F8A8FC2DEFA742006C407E /* CocoaMQTT */,
 			);
 			productName = putrack;
 			productReference = E44D73D62DD5B4BB0073E729 /* putrack.app */;
@@ -117,6 +120,7 @@
 			packageReferences = (
 				E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E4167B1A2DEA29BF0078FA2A /* XCRemoteSwiftPackageReference "ChartView" */,
+				E4F8A8FB2DEFA742006C407E /* XCRemoteSwiftPackageReference "CocoaMQTT" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E44D73952DD5AC580073E729;
@@ -390,6 +394,14 @@
 				minimumVersion = 11.13.0;
 			};
 		};
+		E4F8A8FB2DEFA742006C407E /* XCRemoteSwiftPackageReference "CocoaMQTT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/emqx/CocoaMQTT";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -412,6 +424,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4B774CA2DE47B620093B532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		E4F8A8FC2DEFA742006C407E /* CocoaMQTT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4F8A8FB2DEFA742006C407E /* XCRemoteSwiftPackageReference "CocoaMQTT" */;
+			productName = CocoaMQTT;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

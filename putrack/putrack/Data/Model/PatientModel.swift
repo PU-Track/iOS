@@ -14,7 +14,7 @@ struct Patient: Identifiable {
     let age: Int
     let height: Float
     let weight: Float
-    let status: PatientStatus
+    let status: PostureStatus
     let lastPositionChangeTime: Date
     let nextPositionChangeTime: Date
     let humidity: Float
@@ -34,9 +34,9 @@ extension PatientDetail {
             status: status,
             lastPositionChangeTime: Date(),
             nextPositionChangeTime: Date(),
-            humidity: 0.0,
-            temperature: 0.0,
-            sittingTemperature: 0.0
+            humidity: 46.10,
+            temperature: 26.70,
+            sittingTemperature: 35.7
         )
     }
 }
